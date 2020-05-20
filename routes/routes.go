@@ -3,6 +3,7 @@ import (
 	"net/http" 
 	"encoding/json" 
 	"github.com/gorilla/mux"
+	"InjectMe/utils"
 )
 
 func NewRouter() *mux.Router {
@@ -11,11 +12,10 @@ func NewRouter() *mux.Router {
 	return r
 }
 
-func home(w http.ResponseWriter, r *http.Request){
-	w.Header().Set("Content-type","application/json")
-	json.NewEncoder(w).Encode(struct{
+func home(writer http.ResponseWriter, r *http.Request){
+	utils.ToJson(writer, struct{
 		Message string `json:"message"`
 	}{
-		Message: "Inject Me!  A SQLi vulnerable API ",
+		Message:"Inject Me! A SQLi vulnerable API",
 	})
 }
