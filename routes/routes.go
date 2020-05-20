@@ -16,6 +16,6 @@ func home(w http.ResponseWriter, r *http.Request){
 	json.NewEncoder(w).Encode(struct{
 		Message string `json:"message"`
 	}{
-		Message: "Hello World!",
+		Message: "Inject Me!  A SQLi vulnerable API ",
 	})
 }
