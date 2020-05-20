@@ -1,20 +1,11 @@
 package routes
 import (
-	"net/http" 
 	"github.com/gorilla/mux"
-	"InjectMe/utils"
+	"InjectMe/controllers"
 )
 
 func NewRouter() *mux.Router {
 	r:= mux.NewRouter().StrictSlash(true)
-	r.HandleFunc("/", home).Methods("GET")
+	r.HandleFunc("/", controllers.GetHome).Methods("GET")
 	return r
-}
-
-func home(writer http.ResponseWriter, r *http.Request){
-	utils.ToJson(writer, struct{
-		Message string `json:"message"`
-	}{
-		Message:"Inject Me! A SQLi vulnerable API",
-	})
 }
