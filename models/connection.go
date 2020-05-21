@@ -15,7 +15,7 @@ const (
 )
 
 func Connect() *sql.DB {
-	URL := fmt.Sprint("user=%s password=%s dbname=%s sslmode=%s", USER, PASS, DBNAME, SSLMODE)
+	URL := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", USER, PASS, DBNAME, SSLMODE)
 	db, err := sql.Open("postgres",URL)
 	if err != nil {
 		log.Fatal(err)
