@@ -6,6 +6,11 @@ import (
 	"encoding/json"
 )
 
+type DefaultResponse struct {
+	Data interface{} `json:"data"`
+	Status int 	`json:"status"`
+}
+
 func ErrorResponse(writer http.ResponseWriter, err error, status int){
 	writer.WriteHeader(status)
 	ToJson(writer, struct{
