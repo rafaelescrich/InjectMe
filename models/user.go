@@ -17,8 +17,7 @@ func NewUser(user User)(bool, error){
 	if err != nil {
 		return false, err
 	}
-	query := "insert into users (username, email, password) 
-		values ($1,$2,$3) returning uid"
+	query := "insert into users (username, email, password) values ($1,$2,$3) returning uid"
 	{
 		statement, err := transaction.Prepare(query)
 		if err != nil {
@@ -26,14 +25,13 @@ func NewUser(user User)(bool, error){
 			return false, err
 		}
 		defer statement.Close()
-		_, err = statement.QueryRow(user.Username, user.Email, user.Password)
-		.Scan(&user.UID)
+		err = statement.QueryRow(user.Username, user.Email, user.Password).Scan(&user.UID)
 		if err != nil {
 			transaction.Rollback()
 			return false, err
 		}
 	}
-	query := "insert into wallets (usr) values ($1)"
+	query = "insert into wallets (usr) values ($1)"
 	wallet := Wallet{User: user}
 	wallet.GeneratePublicKey()
 	{
@@ -60,10 +58,10 @@ func GetUsers() ([]User, error){
 		return nil, err
 	}
 	defer resultSet.Close()
-	var users []Users
+	var users []User
 	for resultSet.Next() {
-		err := resultSet.Scan(&user,UID, &user.Username, &user.Email, &user.Password,
-					&user.Status, &user.CreatedAt, &user.UpadtedAt)
+		var user User
+		err := resultSet.Scan(&user.UID, &user.Username, &user.Email, &user.Password,&user.Status, &user.CreatedAt, &user.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}

@@ -11,5 +11,5 @@ type Wallet struct {
 }
 
 func (wallet  *Wallet) GeneratePublicKey(){
-	wallet.PublicKey = utils.Md5(User.Username + User.Password)
+	wallet.PublicKey = utils.Md5(wallet.User.Username + wallet.User.Password)
 }
