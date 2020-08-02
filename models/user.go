@@ -1,16 +1,16 @@
 package models
 
 type User struct {
-	UID uint32 `json:"_id"`
-	Username string `json:"username"`
-	Email string `json:"email"`
-	Password string `json:"password"`
-	Status int8 `json:"status"`
+	UID       uint32 `json:"_id"`
+	Username  string `json:"username"`
+	Email     string `json:"email"`
+	Password  string `json:"password"`
+	Status    int8   `json:"status"`
 	CreatedAt string `json:"created_at"`
 	UpdatedAt string `json:"updated_at"`
 }
 
-func NewUser(user User)(bool, error){
+func NewUser(user User) (bool, error) {
 	con := Connect()
 	defer con.Close()
 	transaction, err := con.Begin()
@@ -33,7 +33,7 @@ func NewUser(user User)(bool, error){
 	}
 	query = "insert into wallets (usr) values ($1)"
 	wallet := Wallet{User: user}
-	wallet.GeneratePublicKey()
+	wallet.GeneratePubKey()
 	{
 		statement, err := transaction.Prepare(query)
 		if err != nil {
@@ -49,7 +49,8 @@ func NewUser(user User)(bool, error){
 	return true, transaction.Commit()
 }
 
-func GetUsers() ([]User, error){
+// GetUsers get users
+func GetUsers() ([]User, error) {
 	con := Connect()
 	defer con.Close()
 	query := "select * from users"
@@ -61,7 +62,7 @@ func GetUsers() ([]User, error){
 	var users []User
 	for resultSet.Next() {
 		var user User
-		err := resultSet.Scan(&user.UID, &user.Username, &user.Email, &user.Password,&user.Status, &user.CreatedAt, &user.UpdatedAt)
+		err := resultSet.Scan(&user.UID, &user.Username, &user.Email, &user.Password, &user.Status, &user.CreatedAt, &user.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}

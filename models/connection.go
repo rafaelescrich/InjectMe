@@ -1,22 +1,26 @@
 package models
+
 //go get github.com/lib/pq
 import (
-	"fmt"
 	"database/sql"
+	"fmt"
 	"log"
-	_"github.com/lib/pq"
+
+	_ "github.com/lib/pq"
 )
 
+// TODO: get env
 const (
-	USER = "blackhat"
-	PASS = "123456"
-	DBNAME = "supercoin"
-	SSLMODE ="disable"
+	USER    = "blackhat"
+	PASS    = "123456"
+	DBNAME  = "supercoin"
+	SSLMODE = "disable"
 )
 
+// Connect to the database
 func Connect() *sql.DB {
 	URL := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=%s", USER, PASS, DBNAME, SSLMODE)
-	db, err := sql.Open("postgres",URL)
+	db, err := sql.Open("postgres", URL)
 	if err != nil {
 		log.Fatal(err)
 		return nil
@@ -24,7 +28,8 @@ func Connect() *sql.DB {
 	return db
 }
 
-func TestConnection(){
+// TestConnection to the database
+func TestConnection() {
 	con := Connect()
 	defer con.Close()
 	err := con.Ping()

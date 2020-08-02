@@ -2,14 +2,14 @@ package controllers
 
 import (
 	"net/http"
-	"InjectMe/utils"
+
+	"github.com/OCFloripa/InjectMe/utils"
 )
-	
 
 func GetHome(writer http.ResponseWriter, r *http.Request) {
-	utils.ToJson(writer, struct{
+	utils.ToJson(writer, struct {
 		Message string `json:"message"`
 	}{
-	Message:"Inject Me - A SQLi vulnerable API",
+		Message: "Inject Me - A SQLi vulnerable API",
 	})
 }

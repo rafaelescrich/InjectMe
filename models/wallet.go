@@ -1,15 +1,18 @@
 package models
+
 import (
-	"InjectMe/utils"
+	utils "github.com/OCFloripa/InjectMe/utils"
 )
 
+// Wallet information
 type Wallet struct {
-	PublicKey string `json:"public_key"`
-	User User `json:"user"`
-	Balance float32 `json:"balance"`
-	UpdatedAt string `json:"updated_at"`
+	PublicKey string  `json:"public_key"`
+	User      User    `json:"user"`
+	Balance   float32 `json:"balance"`
+	UpdatedAt string  `json:"updated_at"`
 }
 
-func (wallet  *Wallet) GeneratePublicKey(){
-	wallet.PublicKey = utils.Md5(wallet.User.Username + wallet.User.Password)
+// GeneratePubKey generates the public key
+func (wallet *Wallet) GeneratePubKey() {
+	wallet.PublicKey = utils.Hash(wallet.User.Username + wallet.User.Password)
 }
